@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Home Digital Twin · Protik Mukherjee</title>
+<meta name="description" content="Case study: statechart-driven smart-home digital twin built with four ESP32 subsystems and Firebase. Presented at EDTConf 2025.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<script>(function(){var t=localStorage.getItem("pm-theme");if(t==="dark"||(!t&&window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches))document.documentElement.setAttribute("data-theme","dark");else document.documentElement.setAttribute("data-theme","light");})();</script>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="brand"><span class="brand-dot"></span><span>protik.mukherjee</span></a>
+    <nav class="nav-links">
+      <a href="../research.html">// Research</a>
+      <a href="../publications.html">// Papers</a>
+      <a href="../projects.html" class="active">// Work</a>
+      <a href="../cv.html">// CV</a>
+      <a href="../teaching.html">// Teaching</a>
+      <a href="../contact.html">// Contact</a>
+    </nav>
+    <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    <a href="../Protik_Mukherjee_CV.pdf" class="nav-cv">CV.pdf ↓</a>
+    <div class="menu-toggle"><button>≡</button></div>
+  </div>
+</header>
+
+<main>
+
+<section class="page-head">
+  <div class="wrap">
+    <div class="crumbs"><a href="../index.html">home</a><span class="sep">/</span><a href="../projects.html">projects</a><span class="sep">/</span>smart-home-twin</div>
+    <p class="label" style="margin-top:1.5rem">/01 · Case study</p>
+    <h1>Smart Home <em>Digital Twin</em> with Statecharts</h1>
+    <p class="lede">A four-ESP32 smart-home testbed wired through Firebase, with statechart-driven control and rolling ML pipelines for fire risk, occupancy, and power. Presented at <strong>EDTConf 2025</strong> (ACM/IEEE MODELS 2025 Companion). <a href="https://cs.torontomu.ca/~sml/demos/smarthomedt-demo.html" target="_blank" rel="noopener" style="color:var(--accent);border-bottom:1px solid currentColor">Live demo available</a>.</p>
+  </div>
+</section>
+
+<!-- Meta -->
+<section class="wrap">
+  <div class="case-meta">
+    <div><div class="k">Year</div><div class="v">2024 – 2025</div></div>
+    <div><div class="k">Role</div><div class="v">Lead developer</div></div>
+    <div><div class="k">Lab</div><div class="v">Software Modelling Lab, TMU</div></div>
+    <div><div class="k">Venue</div><div class="v">EDTConf 2025</div></div>
+  </div>
+</section>
+
+<!-- Problem -->
+<section class="case-section">
+  <div class="wrap">
+    <p class="label" style="margin-bottom:0.85rem">§ 01</p>
+    <h2>The <em>problem</em></h2>
+    <div class="prose text-muted">
+      <p>Industry "digital twins" of smart homes are mostly dashboards that visualize sensor readings. They're not models in any formal sense, you can't simulate them, you can't verify their behaviour against safety properties, and you definitely can't ask them what would happen if the smoke alarm fired while the garage was open and the HVAC was ramping.</p>
+      <p>I wanted a twin that was actually executable: a statechart per subsystem, explicit modes and transitions, real ML on top, and a cloud-side view that mirrored the physical system tightly enough to drive decisions instead of just visualizing them.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Architecture -->
+<section class="case-section">
+  <div class="wrap">
+    <p class="label" style="margin-bottom:0.85rem">§ 02</p>
+    <h2>The <em>architecture</em></h2>
+    <div class="prose">
+      <p>Four ESP32 microcontrollers, one per subsystem, talking to each other over an OTA-ready ESP-NOW mesh and syncing state to Firebase Realtime Database. Each subsystem runs its own statechart and emits structured events; a centralized reasoning layer in the cloud subscribes to the event stream and runs rolling ML.</p>
+    </div>
+
+    <!-- System diagram -->
+    <figure class="diagram" style="margin-top:1.5rem">
+      <svg viewBox="0 0 720 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="System architecture diagram">
+        <!-- Corner brackets -->
+        <g class="diag-brackets">
+          <path d="M 10 30 L 10 10 L 30 10"/>
+          <path d="M 690 10 L 710 10 L 710 30"/>
+          <path d="M 10 350 L 10 370 L 30 370"/>
+          <path d="M 690 370 L 710 370 L 710 350"/>
+        </g>
+        <text x="20" y="22" class="diag-label">SYSTEM.DIAGRAM</text>
+        <text x="700" y="22" class="diag-label" text-anchor="end">smart-home-twin v1</text>
+
+        <!-- Firebase cloud (center top) -->
+        <g transform="translate(280,55)">
+          <rect x="0" y="0" width="160" height="60" rx="10" class="diag-cloud"/>
+          <text x="80" y="28" class="diag-cloud-title" text-anchor="middle">FIREBASE</text>
+          <text x="80" y="46" class="diag-cloud-sub" text-anchor="middle">Realtime DB + Auth</text>
+        </g>
+
+        <!-- Edges from Firebase to ESP nodes -->
+        <g class="diag-edge">
+          <line x1="320" y1="115" x2="100" y2="200"/>
+          <line x1="350" y1="115" x2="270" y2="200"/>
+          <line x1="370" y1="115" x2="450" y2="200"/>
+          <line x1="400" y1="115" x2="620" y2="200"/>
+        </g>
+
+        <!-- ESP-NOW mesh ring (between nodes) -->
+        <path d="M 100 232 Q 360 290 620 232" class="diag-mesh"/>
+        <text x="360" y="285" class="diag-mesh-label" text-anchor="middle">ESP-NOW mesh</text>
+
+        <!-- 4 ESP nodes -->
+        <g transform="translate(60,200)">
+          <rect width="100" height="80" rx="8" class="diag-node"/>
+          <text x="50" y="18" class="diag-node-tag" text-anchor="middle">ESP-01</text>
+          <text x="50" y="40" class="diag-node-title" text-anchor="middle">FIRE</text>
+          <text x="50" y="58" class="diag-node-sub" text-anchor="middle">smoke · temp · CO</text>
+          <text x="50" y="72" class="diag-node-state" text-anchor="middle">{SAFE / WATCH / ALARM}</text>
+        </g>
+        <g transform="translate(220,200)">
+          <rect width="100" height="80" rx="8" class="diag-node"/>
+          <text x="50" y="18" class="diag-node-tag" text-anchor="middle">ESP-02</text>
+          <text x="50" y="40" class="diag-node-title" text-anchor="middle">GARAGE</text>
+          <text x="50" y="58" class="diag-node-sub" text-anchor="middle">door · presence</text>
+          <text x="50" y="72" class="diag-node-state" text-anchor="middle">{CLOSED / OPEN}</text>
+        </g>
+        <g transform="translate(400,200)">
+          <rect width="100" height="80" rx="8" class="diag-node"/>
+          <text x="50" y="18" class="diag-node-tag" text-anchor="middle">ESP-03</text>
+          <text x="50" y="40" class="diag-node-title" text-anchor="middle">LIGHTING</text>
+          <text x="50" y="58" class="diag-node-sub" text-anchor="middle">presence · lux</text>
+          <text x="50" y="72" class="diag-node-state" text-anchor="middle">{OFF / AUTO / DIM}</text>
+        </g>
+        <g transform="translate(580,200)">
+          <rect width="100" height="80" rx="8" class="diag-node"/>
+          <text x="50" y="18" class="diag-node-tag" text-anchor="middle">ESP-04</text>
+          <text x="50" y="40" class="diag-node-title" text-anchor="middle">ENERGY</text>
+          <text x="50" y="58" class="diag-node-sub" text-anchor="middle">CT clamp · HVAC</text>
+          <text x="50" y="72" class="diag-node-state" text-anchor="middle">{IDLE / ACTIVE / PEAK}</text>
+        </g>
+
+        <!-- ML reasoning layer -->
+        <g transform="translate(180,310)">
+          <rect width="360" height="42" rx="8" class="diag-ml"/>
+          <text x="180" y="20" class="diag-ml-title" text-anchor="middle">ML REASONING, rolling 10-min</text>
+          <text x="180" y="34" class="diag-ml-sub" text-anchor="middle">Random Forest (fire) · LSTM (occupancy, power)</text>
+        </g>
+        <!-- Arrow from Firebase down to ML -->
+        <path d="M 360 115 L 360 180 L 360 310" class="diag-edge-dash"/>
+      </svg>
+      <figcaption class="diagram-caption">Fig. 1. Four-ESP32 subsystems sync to Firebase; ML pipeline runs on a 10-minute rolling window of fused events. ESP-NOW mesh allows direct peer-to-peer fallback if Firebase is unreachable.</figcaption>
+    </figure>
+
+    <div class="term" style="margin-top:1.5rem">
+      <div class="term-head">
+        <span class="term-dot" style="background:#c43e62"></span>
+        <span class="term-dot" style="background:#ffb86b"></span>
+        <span class="term-dot" style="background:#7af0d0"></span>
+        <span style="margin-left:0.5rem;color:#8a92a6;font-size:0.72rem">smart-home-twin · subsystems</span>
+      </div>
+      <div class="term-body">
+        <p><span class="beam">esp-01 (fire)</span>     <span class="dim">smoke + temp + CO sensors → fire-risk statechart {SAFE, WATCH, ALARM}</span></p>
+        <p><span class="beam">esp-02 (garage)</span>   <span class="dim">door state + presence → garage statechart {CLOSED, OPENING, OPEN, FAULT}</span></p>
+        <p><span class="beam">esp-03 (lighting)</span> <span class="dim">presence + ambient lux → lighting statechart {OFF, AUTO, DIM, BRIGHT}</span></p>
+        <p><span class="beam">esp-04 (energy)</span>   <span class="dim">CT clamp + HVAC → energy statechart {IDLE, ACTIVE, PEAK}</span></p>
+        <p class="mute">────────────────────────────────────────────────</p>
+        <p><span class="warn">cloud  </span>           <span class="dim">Firebase events → rolling 10-min features → ML reasoning</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ML layer -->
+<section class="case-section">
+  <div class="wrap">
+    <p class="label" style="margin-bottom:0.85rem">§ 03</p>
+    <h2>The <em>ML layer</em></h2>
+    <div class="prose text-muted">
+      <p>Rolling 10-minute pipelines run in the cloud. Three models cover the three jobs the twin needs to do:</p>
+      <ul>
+        <li><strong style="color:var(--ink)">Fire risk</strong>. Random Forest over smoke, temperature, CO, and historical baselines. Random Forest is the right call here because risk classification needs interpretability and fast inference, not raw accuracy.</li>
+        <li><strong style="color:var(--ink)">Occupancy estimate</strong>. LSTM over presence detector counts, door events, and lighting state. Short-horizon forecasts feed the HVAC and lighting controllers.</li>
+        <li><strong style="color:var(--ink)">Power forecast</strong>. LSTM over the energy subsystem's CT-clamp stream with one-hour ahead prediction for load-shifting.</li>
+      </ul>
+      <p>Predictions get pushed back into Firebase as twin attributes, so the physical subsystems can react (e.g., the lighting statechart transitions to <code>AUTO</code> when occupancy ≥ 1).</p>
+    </div>
+  </div>
+</section>
+
+<!-- Results -->
+<section class="case-section">
+  <div class="wrap">
+    <p class="label" style="margin-bottom:0.85rem">§ 04</p>
+    <h2>What I <em>measured</em></h2>
+    <div class="metrics">
+      <div class="metric"><div class="n">4</div><div class="l">ESP32 subsystems</div></div>
+      <div class="metric"><div class="n">10m</div><div class="l">Rolling window</div></div>
+      <div class="metric"><div class="n">&lt;200ms</div><div class="l">Sensor → Firebase</div></div>
+      <div class="metric"><div class="n">OTA</div><div class="l">Firmware updates</div></div>
+    </div>
+    <div class="prose text-muted" style="margin-top:1.5rem">
+      <p>Beyond model accuracy, I characterized end-to-end latency and noise robustness so the system's failure modes were known instead of guessed. The full evaluation is in the EDTConf paper and the lab's technical report.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Lessons -->
+<section class="case-section">
+  <div class="wrap">
+    <p class="label" style="margin-bottom:0.85rem">§ 05</p>
+    <h2>What I <em>learned</em></h2>
+    <div class="prose text-muted">
+      <p>The statechart-first approach pays off the moment you have to debug something at 11pm. Every state is explicit, every transition is named, and the "weird" behaviour the twin emits is always a transition you didn't think about, not a tangle of conditional logic you have to grep through.</p>
+      <p>ML predictions are most useful when they're surfaced as twin attributes, not pushed as alerts. The physical layer can choose what to do with them, and you don't end up with a separate alerting system to babysit.</p>
+      <p>Firebase is great for state mirroring and terrible for time-series. The right next step is a TSDB beside it for the rolling window features, with Firebase reserved for the twin's "now" view.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Next -->
+<section class="case-section">
+  <div class="wrap">
+    <p class="label" style="margin-bottom:0.85rem">§ 06</p>
+    <h2>Where it's <em>going</em></h2>
+    <div class="prose text-muted">
+      <p>This twin became the testbed for <a href="archml4iot.html" style="color:var(--accent);border-bottom:1px solid currentColor">ArchML4IoT</a>, the architecture DSL that compiles high-level IoT specs into the statecharts you see above. Together they're forming a model-driven workflow where you describe the system once, then generate the runtime artifacts plus the simulation model.</p>
+    </div>
+    <div style="margin-top:2rem;display:flex;gap:0.85rem;flex-wrap:wrap">
+      <a href="https://cs.torontomu.ca/~sml/demos/smarthomedt-demo.html" target="_blank" rel="noopener" class="btn-primary">Open the live demo →</a>
+      <a href="https://doi.org/10.1109/MODELS-C68889.2025.00037" target="_blank" rel="noopener" class="btn-ghost" style="border:1px solid var(--line);padding:0.85rem 1.1rem;border-radius:4px">IEEE Xplore</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-inner">
+    <span>© 2026 · Protik Mukherjee</span>
+    <span>Toronto, Canada</span>
+    <span class="ok">● online</span>
+  </div>
+</footer>
+
+<script src="../script.js"></script>
+</body>
+</html>

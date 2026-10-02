@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projects · Protik Mukherjee</title>
+<meta name="description" content="Selected projects: smart-home digital twin, ArchML4IoT, federated anomaly detection, and more.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script>(function(){var t=localStorage.getItem("pm-theme");if(t==="dark"||(!t&&window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches))document.documentElement.setAttribute("data-theme","dark");else document.documentElement.setAttribute("data-theme","light");})();</script>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand"><span class="brand-dot"></span><span>protik.mukherjee</span></a>
+    <nav class="nav-links">
+      <a href="research.html">// Research</a>
+      <a href="publications.html">// Papers</a>
+      <a href="projects.html" class="active">// Work</a>
+      <a href="cv.html">// CV</a>
+      <a href="teaching.html">// Teaching</a>
+      <a href="contact.html">// Contact</a>
+    </nav>
+    <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    <a href="Protik_Mukherjee_CV.pdf" class="nav-cv">CV.pdf ↓</a>
+    <div class="menu-toggle"><button>≡</button></div>
+  </div>
+</header>
+
+<main>
+
+<section class="page-head">
+  <div class="wrap">
+    <div class="crumbs"><a href="index.html">home</a><span class="sep">/</span>projects</div>
+    <p class="label" style="margin-top:1.5rem">§ 03 · Selected work</p>
+    <h1>Things I've <em>built</em>.</h1>
+    <p class="lede">A walkable portfolio of working systems, each with a case-study page that goes into the problem, the architecture, what worked, and what surprised me. Code links live in each case study where the work is open-sourced.</p>
+  </div>
+</section>
+
+<!-- Project tally -->
+<section class="page-meta">
+  <div class="wrap page-meta-inner">
+    <span class="k">// tally</span>
+    <div class="project-tally">
+      <div class="tally"><span class="tally-n">06</span><span class="tally-l">Total projects</span></div>
+      <div class="tally"><span class="tally-n">03</span><span class="tally-l">Case studies</span></div>
+      <div class="tally"><span class="tally-n">05</span><span class="tally-l">Linked papers</span></div>
+      <div class="tally"><span class="tally-n">02</span><span class="tally-l">Active now</span></div>
+      <div class="tally"><span class="tally-n">01</span><span class="tally-l">National award</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section projects-list">
+  <div class="wrap">
+    <div class="project-grid">
+
+      <a href="projects/smart-home-twin.html" class="pcard feature" style="display:block">
+        <div class="pcard-body" style="padding:2.5rem">
+          <div class="meta"><span>/01 · 2024 – 2025</span><span class="sep">·</span><span>Lead developer</span><span class="sep">·</span><span style="color:var(--accent)">EDTConf 2025</span></div>
+          <h3 class="h-display" style="font-size:2.2rem;margin-top:0.8rem">Smart Home Digital Twin <span class="serif-italic text-accent">with Statecharts</span></h3>
+          <p class="text-muted" style="margin-top:1rem;max-width:48rem;line-height:1.6;font-size:1.02rem">Four-ESP32 architecture covering fire, garage, lighting, and energy, synchronized to Firebase with centralized ML reasoning and an OTA-ready ESP-NOW mesh. Statechart-driven control means every transition is explicit and verifiable.</p>
+          <div style="margin-top:1.25rem;display:flex;flex-wrap:wrap;gap:0.4rem">
+            <span class="chip">esp32</span><span class="chip">firebase</span><span class="chip">random-forest</span><span class="chip">lstm</span><span class="chip">esp-now</span><span class="chip">statecharts</span>
+          </div>
+          <p style="margin-top:1.5rem;font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--accent);text-transform:uppercase;letter-spacing:0.12em">→ Read case study</p>
+        </div>
+      </a>
+
+      <a href="projects/federated-anomaly.html" class="pcard med" style="display:block">
+        <div class="pcard-body">
+          <div class="meta"><span>/02 · 2024</span><span class="sep">·</span><span>Research lead</span></div>
+          <h3 class="h-display" style="font-size:1.55rem;margin-top:0.6rem">Federated Anomaly Detection for <span class="serif-italic text-accent">Smart Cities</span></h3>
+          <p class="text-muted" style="margin-top:0.85rem;font-size:0.95rem;line-height:1.6">FedProx + transformer-autoencoder for non-IID IoT telemetry. 86.4% accuracy across heterogeneous clients with benchmarked communication rounds and convergence stability.</p>
+          <div style="margin-top:1rem;display:flex;flex-wrap:wrap;gap:0.4rem">
+            <span class="chip">pytorch</span><span class="chip">fedprox</span><span class="chip">non-iid</span><span class="chip">transformer</span>
+          </div>
+          <p style="margin-top:1.25rem;font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--accent);text-transform:uppercase;letter-spacing:0.12em">→ Case study</p>
+        </div>
+      </a>
+
+      <a href="projects/archml4iot.html" class="pcard med" style="display:block">
+        <div class="pcard-body">
+          <div class="meta"><span>/03 · 2025 – now</span><span class="sep">·</span><span>Co-developer</span><span class="sep">·</span><span style="color:var(--accent)">ANNSIM '26</span></div>
+          <h3 class="h-display" style="font-size:1.55rem;margin-top:0.6rem">ArchML4IoT, <span class="serif-italic text-accent">Architecture DSL</span></h3>
+          <p class="text-muted" style="margin-top:0.85rem;font-size:0.95rem;line-height:1.6">Domain-specific modelling language and toolchain that compiles high-level IoT architecture specifications into executable statecharts and configuration artifacts.</p>
+          <div style="margin-top:1rem;display:flex;flex-wrap:wrap;gap:0.4rem">
+            <span class="chip">dsl</span><span class="chip">mde</span><span class="chip">statecharts</span>
+          </div>
+          <p style="margin-top:1.25rem;font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--accent);text-transform:uppercase;letter-spacing:0.12em">→ Case study</p>
+        </div>
+      </a>
+
+      <article class="pcard sm">
+        <div class="pcard-body">
+          <div class="meta"><span>/04 · 2022</span></div>
+          <h3 class="h-display" style="font-size:1.25rem;margin-top:0.6rem">Stacked ML for Chronic Disease Detection</h3>
+          <p class="text-muted" style="margin-top:0.85rem;font-size:0.9rem;line-height:1.55">Ensemble classifiers for diabetes and heart disease on imbalanced clinical data, precision-recall analysis, cross-validation.</p>
+          <div style="margin-top:1rem;display:flex;flex-wrap:wrap;gap:0.4rem">
+            <span class="chip">scikit-learn</span><span class="chip">imbalanced</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="pcard sm">
+        <div class="pcard-body">
+          <div class="meta"><span>/05 · 2023</span></div>
+          <h3 class="h-display" style="font-size:1.25rem;margin-top:0.6rem">RoadDuAttNet (U-Net + Dual Attention)</h3>
+          <p class="text-muted" style="margin-top:0.85rem;font-size:0.9rem;line-height:1.55">Road extraction from high-resolution satellite imagery. CBAM + SE encoder, self-supervised Tri-Level Attention decoder. <strong style="color:var(--accent)">99.3% acc · 80.8 mIoU · 90.2 Dice</strong>. ICICT4SD 2023 · IEEE.</p>
+          <div style="margin-top:1rem;display:flex;flex-wrap:wrap;gap:0.4rem">
+            <span class="chip">u-net</span><span class="chip">attention</span><span class="chip">remote-sensing</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="pcard sm">
+        <div class="pcard-body">
+          <div class="meta"><span>/06 · 2018</span></div>
+          <h3 class="h-display" style="font-size:1.25rem;margin-top:0.6rem">Smart Meter for Electricity</h3>
+          <p class="text-muted" style="margin-top:0.85rem;font-size:0.9rem;line-height:1.55">ML-assisted metering architecture with digital payment and early anomaly detection. <span style="color:var(--accent)">National Power &amp; Energy Hackathon winner</span>.</p>
+          <div style="margin-top:1rem;display:flex;flex-wrap:wrap;gap:0.4rem">
+            <span class="chip">embedded</span><span class="chip">anomaly</span>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-inner">
+    <span>© 2026 · Protik Mukherjee</span>
+    <span>Toronto, Canada</span>
+    <span class="ok">● online</span>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

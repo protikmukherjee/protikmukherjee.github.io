@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Research · Protik Mukherjee</title>
+<meta name="description" content="Research themes: ML for IoT/CPS, federated learning, digital twins and model-driven engineering, edge AI and health informatics.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script>(function(){var t=localStorage.getItem("pm-theme");if(t==="dark"||(!t&&window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches))document.documentElement.setAttribute("data-theme","dark");else document.documentElement.setAttribute("data-theme","light");})();</script>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-dot"></span><span>protik.mukherjee</span>
+    </a>
+    <nav class="nav-links">
+      <a href="research.html" class="active">// Research</a>
+      <a href="publications.html">// Papers</a>
+      <a href="projects.html">// Work</a>
+      <a href="cv.html">// CV</a>
+      <a href="teaching.html">// Teaching</a>
+      <a href="contact.html">// Contact</a>
+    </nav>
+    <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    <a href="Protik_Mukherjee_CV.pdf" class="nav-cv">CV.pdf ↓</a>
+    <div class="menu-toggle"><button>≡</button></div>
+  </div>
+</header>
+
+<main>
+
+<section class="page-head">
+  <div class="wrap">
+    <div class="crumbs"><a href="index.html">home</a><span class="sep">/</span>research</div>
+    <p class="label" style="margin-top:1.5rem">§ 01 · Research</p>
+    <h1>What I <em>work on</em>.</h1>
+    <p class="lede">My work sits where machine learning meets engineered systems. I'm interested in models that survive deployment, real latency, noisy sensors, intermittent networks, heterogeneous data, and in the architectures that make those models maintainable instead of one-off heroics. Four current threads, each with overlap: cyber-physical systems and IoT, digital twins and model-driven engineering, computer vision and remote sensing, and federated / distributed learning.</p>
+  </div>
+</section>
+
+<!-- Thread balance -->
+<section class="page-meta">
+  <div class="wrap page-meta-inner">
+    <span class="k">// current emphasis</span>
+    <div class="thread-bars">
+      <div class="thread-bar">
+        <span class="lbl">01 / IoT · CPS</span>
+        <span class="track"><span class="fill" style="width:80%"></span></span>
+        <span class="pct">80</span>
+      </div>
+      <div class="thread-bar">
+        <span class="lbl">02 / Digital twins</span>
+        <span class="track"><span class="fill" style="width:90%"></span></span>
+        <span class="pct">90</span>
+      </div>
+      <div class="thread-bar">
+        <span class="lbl">03 / Computer vision</span>
+        <span class="track"><span class="fill" style="width:35%"></span></span>
+        <span class="pct">35</span>
+      </div>
+      <div class="thread-bar">
+        <span class="lbl">04 / Federated learning</span>
+        <span class="track"><span class="fill" style="width:25%"></span></span>
+        <span class="pct">25</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THREAD 1 -->
+<section class="thread-deep">
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <p class="label">Thread 01</p>
+        <h2>ML for <em>IoT</em> and Cyber-Physical Systems</h2>
+      </div>
+      <div class="body">
+        <h4>Motivation</h4>
+        <p>A sensor network without inference is just data storage. The actual questions are: what models can run close to the data, on what cadence, with what trust guarantees, and what should the system do when the network drops for ten minutes.</p>
+
+        <h4>Current work</h4>
+        <p>At the <strong>Software Modelling Lab (TMU)</strong>, I build rolling 10-minute ML pipelines for fire risk, occupancy, and power prediction over a smart-home testbed (four ESP32 subsystems syncing to Firebase). The pipeline backs a digital twin that reasons over fused sensor streams and triggers cloud-side alerts.</p>
+
+        <h4>Methods I lean on</h4>
+        <ul>
+          <li>Random Forests for fast, interpretable risk classification</li>
+          <li>LSTMs for short-horizon power and occupancy forecasting</li>
+          <li>Latency / noise robustness studies to characterize graceful degradation</li>
+          <li>Statechart-driven control logic so reasoning has explicit modes</li>
+        </ul>
+
+        <h4>What's next</h4>
+        <p>Tighter coupling between the ML layer and the digital-twin's formal model, so predictions are checkable against the twin's state machine, not just thrown at a dashboard.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THREAD 2 -->
+<section class="thread-deep">
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <p class="label">Thread 02</p>
+        <h2>Digital Twins &amp; <em>Model-Driven</em> Engineering</h2>
+      </div>
+      <div class="body">
+        <h4>Motivation</h4>
+        <p>A lot of so-called "digital twins" in industry are just dashboards. A useful twin is a runnable model: you can simulate it, verify its behaviour, and actually use it to drive control decisions, not just look at it.</p>
+
+        <h4>Current work</h4>
+        <p>Two coupled efforts at the <strong>Software Modelling Lab</strong>:</p>
+        <ul>
+          <li><strong>Smart Home Digital Twin with Statecharts (EDTConf 2025)</strong>, four ESP32 subsystems for fire, garage, lighting, and energy; centralized statechart reasoning with Firebase sync; OTA-ready ESP-NOW.</li>
+          <li><strong>ArchML4IoT (ANNSIM '26, accepted)</strong>, a domain-specific architecture-modelling language that transforms high-level IoT architectural specifications into executable statecharts and configuration artifacts.</li>
+        </ul>
+
+        <h4>Methods I lean on</h4>
+        <ul>
+          <li>Statecharts (Harel) for explicit modes and transitions</li>
+          <li>DSL design for IoT architecture, with code generation to runtime artifacts</li>
+          <li>Firebase + ESP-NOW for sync and OTA pathways</li>
+        </ul>
+
+        <h4>What's next</h4>
+        <p>Verifiable digital twins, model-checking statechart specs against safety properties before deployment, then continually monitoring drift between the spec and the physical system.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THREAD 3 (NEW: Computer Vision) -->
+<section class="thread-deep">
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <p class="label">Thread 03</p>
+        <h2>Computer Vision &amp; <em>Remote Sensing</em></h2>
+      </div>
+      <div class="body">
+        <h4>Motivation</h4>
+        <p>Satellite and aerial imagery is one of the few data sources where a single well-trained model can influence planning across a whole city or region. The interesting problem is getting attention-based segmentation right on noisy real-world tiles, where small architectural choices end up mattering a lot.</p>
+
+        <h4>Published work</h4>
+        <ul>
+          <li><strong>RoadDuAttNet</strong> (IEEE Xplore 2023). Dual-attention U-Net for road extraction from high-resolution satellite imagery, combining channel and spatial attention.</li>
+          <li><strong>EfficientNet U-Net++</strong> (ICHCSC 2023 / Springer SIST Vol. 376). Comparative performance analysis of EfficientNet-based U-Net++ architectures for automatic building extraction.</li>
+        </ul>
+
+        <h4>Methods I lean on</h4>
+        <ul>
+          <li>Attention-augmented encoder-decoder segmentation</li>
+          <li>Transfer learning from EfficientNet / U-Net families</li>
+          <li>Evaluation on high-resolution remote-sensing benchmarks</li>
+        </ul>
+
+        <h4>What's next</h4>
+        <p>Applying the same lens to agricultural-sensor imagery in the Campbell Lab work, what does well-calibrated segmentation look like when the "tiles" are growth-chamber camera frames rather than satellite passes?</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THREAD 4 (Federated, dialed back) -->
+<section class="thread-deep">
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <p class="label">Thread 04</p>
+        <h2>Federated &amp; <em>Distributed</em> Learning</h2>
+      </div>
+      <div class="body">
+        <h4>Motivation</h4>
+        <p>Smart-city telemetry is non-IID by nature. Every district, building, and device has its own data distribution. Federated learning lets clients train locally and share only model updates, which sounds clean on paper but breaks in practice once heterogeneity and stragglers enter the picture.</p>
+
+        <h4>Prior work</h4>
+        <p>At the <strong>WINCORE Lab (TMU)</strong> I implemented a federated anomaly-detection pipeline for IoT data using FedProx and FedAvg with transformer- and autoencoder-based backbones, with benchmarks for communication-round cost and convergence stability across heterogeneous clients in PyTorch.</p>
+
+        <h4>What I'd want to push further</h4>
+        <ul>
+          <li>Personalization layers on top of FedProx (local heads, shared trunk)</li>
+          <li>Honest evaluation of differential-privacy budgets vs. detection quality in practice</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESEARCH STATEMENT CTA -->
+<section class="section">
+  <div class="wrap">
+    <div class="contact-grid">
+      <div>
+        <p class="label">For PhD applications</p>
+        <h2 class="contact-h" style="margin-top:0.6rem">A full <em>research statement</em> is available on request.</h2>
+        <p class="text-muted" style="margin-top:1.5rem;max-width:38rem;line-height:1.6">If you're a prospective advisor, funding committee, or collaborator, I'm happy to share a tailored research statement and a list of recent talks.</p>
+      </div>
+      <div class="contact-stack">
+        <a href="mailto:protik.mkj@gmail.com" class="primary">Email for statement</a>
+        <a href="publications.html" class="ghost">View publications</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-inner">
+    <span>© 2026 · Protik Mukherjee</span>
+    <span>Toronto, Canada</span>
+    <span class="ok">● online</span>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

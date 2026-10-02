@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ArchML4IoT · Protik Mukherjee</title>
+<meta name="description" content="Case study: ArchML4IoT, a domain-specific architecture-modelling language for IoT systems. Accepted at ANNSIM 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<script>(function(){var t=localStorage.getItem("pm-theme");if(t==="dark"||(!t&&window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches))document.documentElement.setAttribute("data-theme","dark");else document.documentElement.setAttribute("data-theme","light");})();</script>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="brand"><span class="brand-dot"></span><span>protik.mukherjee</span></a>
+    <nav class="nav-links">
+      <a href="../research.html">// Research</a>
+      <a href="../publications.html">// Papers</a>
+      <a href="../projects.html" class="active">// Work</a>
+      <a href="../cv.html">// CV</a>
+      <a href="../teaching.html">// Teaching</a>
+      <a href="../contact.html">// Contact</a>
+    </nav>
+    <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    <a href="../Protik_Mukherjee_CV.pdf" class="nav-cv">CV.pdf ↓</a>
+    <div class="menu-toggle"><button>≡</button></div>
+  </div>
+</header>
+
+<main>
+
+<section class="page-head">
+  <div class="wrap">
+    <div class="crumbs"><a href="../index.html">home</a><span class="sep">/</span><a href="../projects.html">projects</a><span class="sep">/</span>archml4iot</div>
+    <p class="label" style="margin-top:1.5rem">/03 · Case study</p>
+    <h1>ArchML4IoT, <em>Architecture DSL</em> for IoT Twins</h1>
+    <p class="lede">A domain-specific architecture-modelling language and toolchain that takes a high-level IoT architectural specification and compiles it down to executable statecharts and configuration artifacts. <strong>Accepted at ANNSIM '26</strong>.</p>
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="case-meta">
+    <div><div class="k">Year</div><div class="v">2025 – Now</div></div>
+    <div><div class="k">Role</div><div class="v">Co-developer</div></div>
+    <div><div class="k">Lab</div><div class="v">Software Modelling Lab, TMU</div></div>
+    <div><div class="k">Venue</div><div class="v">ANNSIM '26 (accepted)</div></div>
+  </div>
+</section>
+
+<section class="case-section">
+  <div class="wrap">
+    <p class="label" style="margin-bottom:0.85rem">§ 01</p>
+    <h2>The <em>problem</em></h2>
+    <div class="prose text-muted">
+      <p>IoT system descriptions live in three places that drift out of sync: a Word document the architect wrote, a config repo the engineer maintains, and the runtime behaviour the system actually exhibits. When something breaks, no one knows which version is "true."</p>
+      <p>We wanted a single source of truth, a language that captures the IoT architecture at the level architects actually think (devices, subsystems, communication topology, behaviour modes) and that compiles down to runnable artifacts without losing fidelity.</p>
+    </div>
+  </div>
+</section>
+
+<section class="case-section">
+  <div class="wrap">
+    <p class="label" style="margin-bottom:0.85rem">§ 02</p>
+    <h2>The <em>language</em></h2>
+    <div class="prose text-muted">
+      <p>ArchML4IoT lets you describe IoT subsystems aligned with the <strong style="color:var(--ink)">IoT Architectural Reference Model</strong>, their state machines, communication channels, and operational modes, in a concise DSL. From a single spec, the toolchain automatically instantiates reusable behavioural templates from the <strong style="color:var(--ink)">STL4IoT</strong> library to generate:</p>
+      <ul>
+        <li>Executable <strong style="color:var(--ink)">statecharts</strong> per subsystem</li>
+        <li><strong style="color:var(--ink)">Configuration artifacts</strong> for the runtime (channels, topics, schedules)</li>
+        <li>A <strong style="color:var(--ink)">simulation-ready statechart project</strong> usable for design-time analysis before you deploy</li>
+      </ul>
+      <p>The smart-home twin (see the <a href="smart-home-twin.html" style="color:var(--accent);border-bottom:1px solid currentColor">case study</a>) became the testbed: the same four-ESP32 architecture was re-expressible in ArchML4IoT and the generated artifacts matched the hand-written versions.</p>
+    </div>
+
+    <!-- Compilation pipeline diagram -->
+    <figure class="diagram" style="margin-top:1.5rem">
+      <svg viewBox="0 0 720 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ArchML4IoT compilation pipeline">
+        <defs>
+          <marker id="arrowhead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"/>
+          </marker>
+        </defs>
+
+        <!-- Corner brackets + labels -->
+        <g class="diag-brackets">
+          <path d="M 10 30 L 10 10 L 30 10"/>
+          <path d="M 690 10 L 710 10 L 710 30"/>
+          <path d="M 10 350 L 10 370 L 30 370"/>
+          <path d="M 690 370 L 710 370 L 710 350"/>
+        </g>
+        <text x="20" y="22" class="diag-label">COMPILATION.PIPELINE</text>
+        <text x="700" y="22" class="diag-label" text-anchor="end">archml4iot v0.4</text>
+
+        <!-- DSL Spec (top) -->
+        <g transform="translate(220,55)">
+          <rect width="280" height="78" rx="8" class="diag-box-accent"/>
+          <text x="14" y="22" class="diag-text-tag">/ ARCHITECTURE SPEC</text>
+          <text x="14" y="42" font-family="JetBrains Mono" font-size="10" fill="var(--ink)">system SmartHome {</text>
+          <text x="26" y="55" font-family="JetBrains Mono" font-size="10" fill="var(--muted)">devices: { fire, garage, lighting, energy }</text>
+          <text x="26" y="68" font-family="JetBrains Mono" font-size="10" fill="var(--muted)">comm: ESP-NOW · Firebase</text>
+        </g>
+
+        <!-- Arrow down to compiler -->
+        <g style="color: var(--accent)">
+          <line x1="360" y1="138" x2="360" y2="172" class="diag-arrow"/>
+        </g>
+
+        <!-- Compiler -->
+        <g transform="translate(250,180)">
+          <rect width="220" height="44" rx="8" class="diag-box"/>
+          <text x="110" y="20" class="diag-text-h accent" text-anchor="middle">ArchML4IoT compiler</text>
+          <text x="110" y="34" class="diag-text-sm" text-anchor="middle">parse · validate · generate</text>
+        </g>
+
+        <!-- 3 arrows down to outputs -->
+        <g style="color: var(--accent)">
+          <path d="M 300 230 L 300 250 L 140 250 L 140 280" class="diag-arrow"/>
+          <line x1="360" y1="230" x2="360" y2="280" class="diag-arrow"/>
+          <path d="M 420 230 L 420 250 L 580 250 L 580 280" class="diag-arrow"/>
+        </g>
+
+        <!-- 3 outputs -->
+        <g transform="translate(60,290)">
+          <rect width="160" height="60" rx="8" class="diag-box"/>
+          <text x="80" y="22" class="diag-text-tag" text-anchor="middle">OUTPUT · 01</text>
+          <text x="80" y="42" class="diag-text-h" text-anchor="middle">Statecharts</text>
+          <text x="80" y="55" class="diag-text-sm" text-anchor="middle">per subsystem</text>
+        </g>
+        <g transform="translate(280,290)">
+          <rect width="160" height="60" rx="8" class="diag-box"/>
+          <text x="80" y="22" class="diag-text-tag" text-anchor="middle">OUTPUT · 02</text>
+          <text x="80" y="42" class="diag-text-h" text-anchor="middle">Configs</text>
+          <text x="80" y="55" class="diag-text-sm" text-anchor="middle">channels · topics · keys</text>
+        </g>
+        <g transform="translate(500,290)">
+          <rect width="160" height="60" rx="8" class="diag-box"/>
+          <text x="80" y="22" class="diag-text-tag" text-anchor="middle">OUTPUT · 03</text>
+          <text x="80" y="42" class="diag-text-h" text-anchor="middle">Simulation</text>
+          <text x="80" y="55" class="diag-text-sm" text-anchor="middle">design-time analysis</text>
+        </g>
+      </svg>
+      <figcaption class="diagram-caption">Fig. 1. One ArchML4IoT spec compiles to three artifact families: runnable statecharts, runtime configs, and a simulation model usable before deployment.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="case-section">
+  <div class="wrap">
+    <p class="label" style="margin-bottom:0.85rem">§ 03</p>
+    <h2>Why a <em>DSL</em></h2>
+    <div class="prose text-muted">
+      <p>You can build IoT systems by gluing YAML to scripts to firmware, and many people do. But once you have a DSL, three things change.</p>
+      <p>First, the spec is the contract. The architect's intent and the engineer's implementation can't diverge silently because both fall out of the same source. Second, you get analysis for free, model-checking, reachability, dead-state detection, because the spec is in a form a tool can reason about. Third, the spec is the documentation. New engineers read the DSL file, not a stale README.</p>
+    </div>
+  </div>
+</section>
+
+<section class="case-section">
+  <div class="wrap">
+    <p class="label" style="margin-bottom:0.85rem">§ 04</p>
+    <h2>Where it's <em>going</em></h2>
+    <div class="prose text-muted">
+      <p>The ANNSIM '26 paper introduces the language and the simulation-model generation pipeline. The next milestones I'm working on: model-checking against safety properties (e.g., "alarm always precedes evacuation transition"), and continuous drift monitoring between the DSL spec and the running system's actual behaviour traces.</p>
+    </div>
+    <div style="margin-top:2rem;display:flex;gap:0.85rem;flex-wrap:wrap">
+      <a href="smart-home-twin.html" class="btn-ghost" style="border:1px solid var(--line);padding:0.85rem 1.1rem;border-radius:4px">See the Smart Home Twin testbed</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-inner">
+    <span>© 2026 · Protik Mukherjee</span>
+    <span>Toronto, Canada</span>
+    <span class="ok">● online</span>
+  </div>
+</footer>
+
+<script src="../script.js"></script>
+</body>
+</html>

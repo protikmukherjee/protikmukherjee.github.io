@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Federated Anomaly Detection · Protik Mukherjee</title>
+<meta name="description" content="Case study: federated learning for IoT anomaly detection in smart cities. FedProx + transformer-autoencoder, 86.4% on non-IID data.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<script>(function(){var t=localStorage.getItem("pm-theme");if(t==="dark"||(!t&&window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches))document.documentElement.setAttribute("data-theme","dark");else document.documentElement.setAttribute("data-theme","light");})();</script>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="brand"><span class="brand-dot"></span><span>protik.mukherjee</span></a>
+    <nav class="nav-links">
+      <a href="../research.html">// Research</a>
+      <a href="../publications.html">// Papers</a>
+      <a href="../projects.html" class="active">// Work</a>
+      <a href="../cv.html">// CV</a>
+      <a href="../teaching.html">// Teaching</a>
+      <a href="../contact.html">// Contact</a>
+    </nav>
+    <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+    <a href="../Protik_Mukherjee_CV.pdf" class="nav-cv">CV.pdf ↓</a>
+    <div class="menu-toggle"><button>≡</button></div>
+  </div>
+</header>
+
+<main>
+
+<section class="page-head">
+  <div class="wrap">
+    <div class="crumbs"><a href="../index.html">home</a><span class="sep">/</span><a href="../projects.html">projects</a><span class="sep">/</span>federated-anomaly</div>
+    <p class="label" style="margin-top:1.5rem">/02 · Case study</p>
+    <h1>Federated <em>Anomaly Detection</em> for Smart Cities</h1>
+    <p class="lede">A federated learning pipeline that detects anomalies in smart-city IoT telemetry without centralizing raw data. FedProx + transformer-autoencoder backbones, evaluated across heterogeneous (non-IID) clients. First-author paper with Khwaja, Anpalagan, and Baljon, published at WiSPNET 2025 (IEEE).</p>
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="case-meta">
+    <div><div class="k">Year</div><div class="v">2024 – 2025</div></div>
+    <div><div class="k">Role</div><div class="v">First author</div></div>
+    <div><div class="k">Lab</div><div class="v">WINCORE Lab, TMU</div></div>
+    <div><div class="k">Venue</div><div class="v">WiSPNET 2025 · IEEE</div></div>
+  </div>
+</section>
+
+<section class="case-section">
+  <div class="wrap">
+    <p class="label" style="margin-bottom:0.85rem">§ 01</p>
+    <h2>The <em>problem</em></h2>
+    <div class="prose text-muted">
+      <p>Smart-city telemetry comes from districts, buildings, and devices that look nothing alike statistically. Centralizing it for training is a privacy non-starter; training one model per client misses the joint signal. Federated learning is the obvious middle path, until you actually try to make it converge on data this heterogeneous.</p>
+      <p>The question I wanted to answer: <em>how well does federated anomaly detection hold up across realistic non-IID partitions, and what are the right architectural choices for the local model?</em></p>
+    </div>
+  </div>
+</section>
+
+<section class="case-section">
+  <div class="wrap">
+    <p class="label" style="margin-bottom:0.85rem">§ 02</p>
+    <h2>The <em>approach</em></h2>
+    <div class="prose text-muted">
+      <p>Implemented in PyTorch, with two aggregation strategies (<strong style="color:var(--ink)">FedAvg</strong> and <strong style="color:var(--ink)">FedProx</strong>) and two local-model families (transformer encoder + autoencoder reconstruction). Each client owned a partition of smart-city telemetry; partitions were intentionally non-IID by feature distribution and label imbalance.</p>
+      <p>The autoencoder backbone catches anomalies as reconstruction error spikes; the transformer encoder captures longer temporal dependencies and improves on rare-pattern detection. FedProx's proximal term is what kept the global model from being pulled apart by drifty clients.</p>
+    </div>
+
+    <!-- Federated learning round diagram -->
+    <figure class="diagram" style="margin-top:1.5rem">
+      <svg viewBox="0 0 720 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Federated learning round">
+        <defs>
+          <marker id="arrowup" viewBox="0 0 10 10" refX="5" refY="2" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M 0 8 L 5 0 L 10 8 z" fill="var(--accent)"/>
+          </marker>
+          <marker id="arrowdn" viewBox="0 0 10 10" refX="5" refY="8" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M 0 2 L 5 10 L 10 2 z" fill="var(--accent-2)"/>
+          </marker>
+        </defs>
+
+        <g class="diag-brackets">
+          <path d="M 10 30 L 10 10 L 30 10"/>
+          <path d="M 690 10 L 710 10 L 710 30"/>
+          <path d="M 10 350 L 10 370 L 30 370"/>
+          <path d="M 690 370 L 710 370 L 710 350"/>
+        </g>
+        <text x="20" y="22" class="diag-label">FEDERATED.ROUND</text>
+        <text x="700" y="22" class="diag-label" text-anchor="end">FedProx + Transformer-AE</text>
+
+        <!-- Global server (top) -->
+        <g transform="translate(260,55)">
+          <rect width="200" height="78" rx="10" class="diag-box-accent"/>
+          <text x="100" y="22" class="diag-text-tag" text-anchor="middle">SERVER · AGGREGATOR</text>
+          <text x="100" y="44" class="diag-text-h accent" text-anchor="middle">Global Model θ</text>
+          <text x="100" y="62" class="diag-text-sm" text-anchor="middle">FedProx · proximal μ</text>
+        </g>
+
+        <!-- Arrows: clients up to server (model updates) -->
+        <g stroke-width="1.5" fill="none">
+          <line x1="80"  y1="280" x2="290" y2="138" stroke="var(--accent)"  marker-end="url(#arrowup)"/>
+          <line x1="220" y1="280" x2="320" y2="138" stroke="var(--accent)"  marker-end="url(#arrowup)"/>
+          <line x1="360" y1="280" x2="360" y2="138" stroke="var(--accent)"  marker-end="url(#arrowup)"/>
+          <line x1="500" y1="280" x2="400" y2="138" stroke="var(--accent)"  marker-end="url(#arrowup)"/>
+          <line x1="640" y1="280" x2="430" y2="138" stroke="var(--accent)"  marker-end="url(#arrowup)"/>
+        </g>
+        <!-- Arrows: server down to clients (broadcast) -->
+        <g stroke-width="1.5" fill="none" opacity="0.55">
+          <line x1="300" y1="138" x2="100" y2="278" stroke="var(--accent-2)" marker-end="url(#arrowdn)" stroke-dasharray="3 3"/>
+          <line x1="330" y1="138" x2="240" y2="278" stroke="var(--accent-2)" marker-end="url(#arrowdn)" stroke-dasharray="3 3"/>
+          <line x1="370" y1="138" x2="380" y2="278" stroke="var(--accent-2)" marker-end="url(#arrowdn)" stroke-dasharray="3 3"/>
+          <line x1="395" y1="138" x2="520" y2="278" stroke="var(--accent-2)" marker-end="url(#arrowdn)" stroke-dasharray="3 3"/>
+          <line x1="420" y1="138" x2="660" y2="278" stroke="var(--accent-2)" marker-end="url(#arrowdn)" stroke-dasharray="3 3"/>
+        </g>
+
+        <!-- Labels for the up/down flows -->
+        <text x="490" y="220" class="diag-text-sm" fill="var(--accent)">↑ local Δθ</text>
+        <text x="180" y="220" class="diag-text-sm" fill="var(--accent-2)">↓ broadcast θ</text>
+
+        <!-- 5 clients (bottom row) -->
+        <g transform="translate(35,278)">
+          <rect width="90" height="64" rx="8" class="diag-box"/>
+          <text x="45" y="18" class="diag-text-tag" text-anchor="middle">CLIENT 01</text>
+          <text x="45" y="36" class="diag-text-h" text-anchor="middle" style="font-size:11px">District A</text>
+          <text x="45" y="52" class="diag-text-sm" text-anchor="middle">non-IID</text>
+        </g>
+        <g transform="translate(175,278)">
+          <rect width="90" height="64" rx="8" class="diag-box"/>
+          <text x="45" y="18" class="diag-text-tag" text-anchor="middle">CLIENT 02</text>
+          <text x="45" y="36" class="diag-text-h" text-anchor="middle" style="font-size:11px">District B</text>
+          <text x="45" y="52" class="diag-text-sm" text-anchor="middle">non-IID</text>
+        </g>
+        <g transform="translate(315,278)">
+          <rect width="90" height="64" rx="8" class="diag-box"/>
+          <text x="45" y="18" class="diag-text-tag" text-anchor="middle">CLIENT 03</text>
+          <text x="45" y="36" class="diag-text-h" text-anchor="middle" style="font-size:11px">District C</text>
+          <text x="45" y="52" class="diag-text-sm" text-anchor="middle">non-IID</text>
+        </g>
+        <g transform="translate(455,278)">
+          <rect width="90" height="64" rx="8" class="diag-box"/>
+          <text x="45" y="18" class="diag-text-tag" text-anchor="middle">CLIENT 04</text>
+          <text x="45" y="36" class="diag-text-h" text-anchor="middle" style="font-size:11px">District D</text>
+          <text x="45" y="52" class="diag-text-sm" text-anchor="middle">non-IID</text>
+        </g>
+        <g transform="translate(595,278)">
+          <rect width="90" height="64" rx="8" class="diag-box"/>
+          <text x="45" y="18" class="diag-text-tag" text-anchor="middle">CLIENT 05</text>
+          <text x="45" y="36" class="diag-text-h" text-anchor="middle" style="font-size:11px">District E</text>
+          <text x="45" y="52" class="diag-text-sm" text-anchor="middle">non-IID</text>
+        </g>
+      </svg>
+      <figcaption class="diagram-caption">Fig. 1. One round of FedProx: clients train locally on their own non-IID data, send weight deltas up; server aggregates and broadcasts the new global θ back down. Proximal term keeps drift bounded across heterogeneous clients.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="case-section">
+  <div class="wrap">
+    <p class="label" style="margin-bottom:0.85rem">§ 03</p>
+    <h2>The <em>results</em></h2>
+    <div class="metrics">
+      <div class="metric"><div class="n">86.4<span style="font-size:1.4rem">%</span></div><div class="l">Accuracy (non-IID)</div></div>
+      <div class="metric"><div class="n">FedProx</div><div class="l">Best aggregator</div></div>
+      <div class="metric"><div class="n">×N</div><div class="l">Heterogeneous clients</div></div>
+      <div class="metric"><div class="n">PyTorch</div><div class="l">Implementation</div></div>
+    </div>
+    <div class="prose text-muted" style="margin-top:1.5rem">
+      <p>Full benchmarks for communication-round count and convergence stability appear in the paper. The headline: FedProx + autoencoder hit 86.43% accuracy on the non-IID partition while staying communication-efficient compared to the transformer variant.</p>
+    </div>
+  </div>
+</section>
+
+<section class="case-section">
+  <div class="wrap">
+    <p class="label" style="margin-bottom:0.85rem">§ 04</p>
+    <h2>What I <em>learned</em></h2>
+    <div class="prose text-muted">
+      <p>FedAvg's "just average the weights" intuition stops working the moment client distributions diverge meaningfully. FedProx's proximal regularizer is doing more than the math suggests, it's the difference between models that drift apart and models that share enough structure to be useful.</p>
+      <p>Autoencoders are unfairly maligned in modern ML discourse. For anomaly detection on telemetry where you have lots of "normal" and very little "weird," reconstruction error is a perfectly reasonable signal and ridiculously cheap to compute compared to the transformer alternative.</p>
+      <p>The most important plot in the paper isn't the accuracy bar chart. It's the convergence curve across communication rounds: that's what tells you whether the system will work in a real deployment where bandwidth is the constraint.</p>
+    </div>
+  </div>
+</section>
+
+<section class="case-section">
+  <div class="wrap">
+    <p class="label" style="margin-bottom:0.85rem">§ 05</p>
+    <h2>Where it's <em>going</em></h2>
+    <div class="prose text-muted">
+      <p>Next iterations: a personalized FedProx variant that lets each client keep a local head adapted to its own distribution, plus a real evaluation of differential-privacy budgets and how much they actually cost detection performance in practice.</p>
+    </div>
+    <div style="margin-top:2rem;display:flex;gap:0.85rem;flex-wrap:wrap">
+      <a href="https://doi.org/10.1109/WiSPNET64060.2025.11004967" target="_blank" rel="noopener" class="btn-primary">Read paper (IEEE Xplore)</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-inner">
+    <span>© 2026 · Protik Mukherjee</span>
+    <span>Toronto, Canada</span>
+    <span class="ok">● online</span>
+  </div>
+</footer>
+
+<script src="../script.js"></script>
+</body>
+</html>
